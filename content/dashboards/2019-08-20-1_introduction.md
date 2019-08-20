@@ -1,0 +1,75 @@
+---
+title: 1. Introduction
+author: Richard White
+date: '2019-08-20'
+slug: this-is-a-test
+categories:
+tags: 
+- test
+
+---
+
+## Executive summary
+
+The dashboards project is a project at FHI concerned with running automated analyses on data.
+
+In principle, the dashboards project is split up into two parts:
+
+1. The umbrella infrastructure (i.e. Docker containers, continuous integration, chron jobs, etc.)
+2. The R package for each automated analysis
+
+## What is an automated analysis?
+
+An automated analysis is any analysis that:
+
+1. Will be repeated multiple times in the future
+2. Always has an input dataset with consistent file structure
+3. Always has the same expected output (e.g. tables, graphs, reports)
+
+## Why not have one project for each automated analysis?
+
+Automated analyses have a lot of code and infrastructure in common.
+
+Automated analyses:
+
+1. Need their code to be tested via unit testing to ensure the results are correct
+2. Need their code to be tested via integration testing to ensure everything runs
+3. Need to be run at certain times
+4. Need to be able to send emails notifying people that the analyses have finished running
+5. Need to make their results accessible to the relevant people
+
+By combining them all in one umbrella project we can force everyone to use the same infrastructure and coding principles, so we:
+
+1. Only need to solve a problem once
+2. Only need to maintain one system
+3. Can easily work on multiple projects, as we all speak the same language
+
+## Important repositories 
+
+### Infrastructure
+
+https://github.com/raubreywhite/dashboards_control/ (private)
+
+This contains the Dockerfiles, cronfiles, all bash scripts, etc.
+
+http://github.com/raubreywhite/docker/
+
+This contains the base analysis Dockerfile
+
+https://rocker-project.org
+
+https://folkehelseinstituttet.github.io/fhi/
+
+This is an R package that contains helper functions.
+
+### Automated analyses R packages
+
+https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/
+
+https://folkehelseinstituttet.github.io/dashboards_normomo/
+
+https://folkehelseinstituttet.github.io/dashboards_sykdomspulspdf/
+
+https://folkehelseinstituttet.github.io/dashboards_noispiah/
+
+https://folkehelseinstituttet.github.io/dashboards_sykdomspulslog/

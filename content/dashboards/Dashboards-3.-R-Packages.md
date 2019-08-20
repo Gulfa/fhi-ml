@@ -1,0 +1,82 @@
+---
+title: 3. R Packages 
+author: Richard White
+date: '2019-08-20'
+slug: this-is-a-test
+categories:
+tags: 
+- test
+
+---
+
+## Overview
+
+Each automated analysis has its own R package:
+
+- [sykdomspuls](https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/)
+- [normomo](https://folkehelseinstituttet.github.io/dashboards_normomo/)
+- [noispiah](https://folkehelseinstituttet.github.io/dashboards_noispiah/)
+- [sykdomspulspdf](https://folkehelseinstituttet.github.io/dashboards_sykdomspulspdf/)
+- [sykdomspulslog](https://folkehelseinstituttet.github.io/dashboards_sykdomspulslog/)
+
+Each R package contains all of the code necessary for that automated analysis. Typical examples are:
+
+- Data cleaning
+- Signal analysis
+- Graph generation
+- Report generation
+
+## Requirements
+
+The R packages should be developed using unit testing as implemented in the [testthat](http://r-pkgs.had.co.nz/tests.html) package.
+
+Furthermore, the R package should operate (and be able to be tested) independently from the real datasets on the system. This is because the real datasets cannot be shared publically or uploaded to github. To circumvent this issue, each package will need to develop functions that can generate fake data. [GenFakeDataRaw](https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/reference/GenFakeDataRaw.html) is one example from [sykdomspuls](https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/).
+
+We also require that unit tests are created to test the formatting/structure of results. [ValidateAnalysisResults](https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/reference/ValidateAnalysisResults.html) is one example from [sykdomspuls](https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/), where the names of the data.table are checked against reference values to ensure that the structure of the results are not accidentally changed.
+
+## Deployment via travis-ci and drat
+
+Unit testing is then automatically run using [travis-ci](http://r-pkgs.had.co.nz/check.html#travis). If the R package passes all tests, then we use [drat](https://github.com/eddelbuettel/drat) to deploy a built version of the package to Folkehelseinstituttet's R repository: https://folkehelseinstituttet.github.io/drat/.
+
+## Integration with the local file system
+
+We assume that the local file system follows [this file structure](#internalfilestructure), and this is provided via Docker-compose from the [umbrella infrastructure](#umbrella).
+
+Referencing the `data_raw`, `data_clean`, `data_app`, and `results` folders are done through the the [fhi](https://folkehelseinstituttet.github.io/fhi/articles/dashboardbasics.html) package.
+
+## inst/src/RunProcess.R {#RunProcess}
+
+An automated analysis needs to:
+
+1. Know the location of the data/results folders.
+2. Check for new data in these folders. If no new data - then quit.
+3. Load in the data.
+4. Load in the analysis functions.
+5. Run the analyses.
+6. Save the results.
+
+`RunProcess.R` is responsible for these tasks.
+
+We can think of it as an extremely short and extremely high-level script that implements the analysis scripts.
+
+Depending on the automated analysis `RunProcess.R` can be run every two minutes (constantly checking for new data), or once a week (when we know that data will only be available on a certain day/time).
+
+## inst/src/RunTest.R
+
+This file is the brains of the integrated testing. This file will be run by the [$DASHBOARDS_FOLDER/dashboards_control/bin/test_*.sh](#test_noispiah) files.
+
+## inst/bin/0_run.sh
+
+This file will be run by cron
+
+This file is used to:
+
+1. Do any pre-analysis steps (e.g. download new data from an SFTP server)
+2. Run [inst/src/RunProcess.R](#RunProcess)
+
+```
+/usr/local/bin/Rscript /r/ANALYSIS/src/RunProcess.R
+```
+
+3. Do any post-analysis steps (e.g. upload results to an SFTP server)
+
