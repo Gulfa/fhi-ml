@@ -12,52 +12,30 @@
     
     
     <item>
-      <title>1. Introduction</title>
-      <link>/dashboards/introduction/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      <title>5. Manual Actions</title>
+      <link>/dashboards/manual-actions/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/dashboards/introduction/</guid>
-      <description>Executive summary The dashboards project is a project at FHI concerned with running automated analyses on data.
-In principle, the dashboards project is split up into two parts:
- The umbrella infrastructure (i.e. Docker containers, continuous integration, chron jobs, etc.) The R package for each automated analysis  What is an automated analysis? An automated analysis is any analysis that:
- Will be repeated multiple times in the future Always has an input dataset with consistent file structure Always has the same expected output (e.</description>
+      <guid>/dashboards/manual-actions/</guid>
+      <description>Sykdomspulsen Sykdomspulsen Weekly update The weekly update needs to be done every Tuesday morning. New data has arrived from Helsedirektoratet to FHI during Monday evening and night, and the further statistical analysis and updating of the interactive webpage for Sykdomspulsen is done on Tuesday. For more information about Sykdomspulsen setup:
+https://folkehelseinstituttet.github.io/dashboards/
+https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/
+ Log in to «Sikker sone» Click on «Sikkersone statistikk» Open R or R studio by clicking on the four squares in the bottom left corner, then on the arrow pointing downwards approximately in the same area and search for R in the upper right corner When R is open, click on “file” in the upper left corner, and then “open script” Open G:/Helseregistre/MSIS/Sykdomspulsen/Gry/FormattingWithinSikkersone/</description>
     </item>
     
     <item>
-      <title>2a Infrastructure (Physical Hardware and Subscriptions)</title>
-      <link>/dashboards/infrastructure-physical-hardware-and-subscriptions/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      <title>4. Contributing Quickstart</title>
+      <link>/dashboards/contributing-quickstart/</link>
+      <pubDate>Sun, 06 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/dashboards/infrastructure-physical-hardware-and-subscriptions/</guid>
-      <description>Physical Hardware and Subscriptions  One Github organization (http://github.com/folkehelseinstituttet/) One Github team (https://github.com/orgs/folkehelseinstituttet/teams/dashboards) One drat repository (https://folkehelseinstituttet.github.io/drat/) One travis-ci.org account (http://travis-ci.org/folkehelseinstituttet) One travis-ci.com account (http://travis-ci.com/folkehelseinstituttet) One Docker hub account (http://hub.docker.com/u/raw996/) At least three computers:  Production linux computer smhb Integration testing linux computer linux Development linux computers (1 per person)   Production Computer - smhb Explanation smhb is designed to be extremely simple. It has two jobs:
- Updating raw996/dashboards_r:production, raw996/dashboards_shiny:production, and raw996/dashboards_nginx:production Making sure that docker-compose-prod.</description>
-    </item>
-    
-    <item>
-      <title>2b. Infrastructure (Docker)</title>
-      <link>/dashboards/infrastructure-docker/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/dashboards/infrastructure-docker/</guid>
-      <description>Analysis Docker Image Images Our analysis Docker images are based off the rocker images. More specifically, the rocker/verse:3.5.0 image.
-This Docker image is then expanded upon by a separate Dockerfile raw996/dhadley. This Docker image is automatically rebuilt by Jenkins on linux whenever the repository is updated. The resultant Docker image is pushed to raw996/dhadley:3.5.0. This image is a general-purpose analysis image, with no sensitive information in it.
-This Docker image is then expanded upon by a separate Dockerfile raw996/dashboards_r.</description>
-    </item>
-    
-    <item>
-      <title>2c. Infrastructure (Scripts)</title>
-      <link>/dashboards/infrastructure-scripts/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/dashboards/infrastructure-scripts/</guid>
-      <description>Overview Most of the bash scripts, Docker files, passwords, etc. are all hosted at the private Github repository raubreywhite/dashboards_control.
-- $DASHBOARDS_FOLDER/dashboards_control/ |-- bin/ | |-- dev_down.sh | |-- dev_up.sh | |-- docker_build.sh | |-- docker_login.sh | |-- docker_push_test_to_prod.sh | |-- prod_down.sh | |-- prod_up.sh | |-- prod_update.sh | |-- public.sh | |-- test_noispiah.sh | |-- test_normomo.sh | |-- test_sykdomspuls_log.sh | |-- test_sykdomspuls_pdf.sh | |-- test_sykdomspuls.sh |-- docker-compose-api.yml |-- docker-compose-dev.yml |-- docker-compose-prod.</description>
+      <guid>/dashboards/contributing-quickstart/</guid>
+      <description>Quickstart  Create a project folder for your code (let us say ~/git/dashboards). This folder will be accessible from inside your Docker container as /dashboards/ Create a project folder for your data (let us say ~/data/). Clone the following repos inside ~/git/dashboards:  https://github.com/raubreywhite/dashboards_control/ (private)  Fork the following repos, and then clone the forks to your computer inside ~/git/dashboards (depending on which project you are working on):  https://github.</description>
     </item>
     
     <item>
       <title>3. R Packages</title>
       <link>/dashboards/r-packages/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/dashboards/r-packages/</guid>
       <description>Overview Each automated analysis has its own R package:
@@ -67,24 +45,46 @@ Furthermore, the R package should operate (and be able to be tested) independent
     </item>
     
     <item>
-      <title>4. Contributing Quickstart</title>
-      <link>/dashboards/contributing-quickstart/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      <title>2c. Infrastructure (Scripts)</title>
+      <link>/dashboards/infrastructure-scripts/</link>
+      <pubDate>Fri, 04 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/dashboards/contributing-quickstart/</guid>
-      <description>Quickstart  Create a project folder for your code (let us say ~/git/dashboards). This folder will be accessible from inside your Docker container as /dashboards/ Create a project folder for your data (let us say ~/data/). Clone the following repos inside ~/git/dashboards:  https://github.com/raubreywhite/dashboards_control/ (private)  Fork the following repos, and then clone the forks to your computer inside ~/git/dashboards (depending on which project you are working on):  https://github.</description>
+      <guid>/dashboards/infrastructure-scripts/</guid>
+      <description>Overview Most of the bash scripts, Docker files, passwords, etc. are all hosted at the private Github repository raubreywhite/dashboards_control.
+- $DASHBOARDS_FOLDER/dashboards_control/ |-- bin/ | |-- dev_down.sh | |-- dev_up.sh | |-- docker_build.sh | |-- docker_login.sh | |-- docker_push_test_to_prod.sh | |-- prod_down.sh | |-- prod_up.sh | |-- prod_update.sh | |-- public.sh | |-- test_noispiah.sh | |-- test_normomo.sh | |-- test_sykdomspuls_log.sh | |-- test_sykdomspuls_pdf.sh | |-- test_sykdomspuls.sh |-- docker-compose-api.yml |-- docker-compose-dev.yml |-- docker-compose-prod.</description>
     </item>
     
     <item>
-      <title>5. Manual Actions</title>
-      <link>/dashboards/manual-actions/</link>
-      <pubDate>Tue, 20 Aug 2019 00:00:00 +0000</pubDate>
+      <title>2b. Infrastructure (Docker)</title>
+      <link>/dashboards/infrastructure-docker/</link>
+      <pubDate>Thu, 03 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/dashboards/manual-actions/</guid>
-      <description>Sykdomspulsen Sykdomspulsen Weekly update The weekly update needs to be done every Tuesday morning. New data has arrived from Helsedirektoratet to FHI during Monday evening and night, and the further statistical analysis and updating of the interactive webpage for Sykdomspulsen is done on Tuesday. For more information about Sykdomspulsen setup:
-https://folkehelseinstituttet.github.io/dashboards/
-https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/
- Log in to «Sikker sone» Click on «Sikkersone statistikk» Open R or R studio by clicking on the four squares in the bottom left corner, then on the arrow pointing downwards approximately in the same area and search for R in the upper right corner When R is open, click on “file” in the upper left corner, and then “open script” Open G:/Helseregistre/MSIS/Sykdomspulsen/Gry/FormattingWithinSikkersone/</description>
+      <guid>/dashboards/infrastructure-docker/</guid>
+      <description>Analysis Docker Image Images Our analysis Docker images are based off the rocker images. More specifically, the rocker/verse:3.5.0 image.
+This Docker image is then expanded upon by a separate Dockerfile raw996/dhadley. This Docker image is automatically rebuilt by Jenkins on linux whenever the repository is updated. The resultant Docker image is pushed to raw996/dhadley:3.5.0. This image is a general-purpose analysis image, with no sensitive information in it.
+This Docker image is then expanded upon by a separate Dockerfile raw996/dashboards_r.</description>
+    </item>
+    
+    <item>
+      <title>2a Infrastructure (Physical Hardware and Subscriptions)</title>
+      <link>/dashboards/infrastructure-physical-hardware-and-subscriptions/</link>
+      <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/dashboards/infrastructure-physical-hardware-and-subscriptions/</guid>
+      <description>Physical Hardware and Subscriptions  One Github organization (http://github.com/folkehelseinstituttet/) One Github team (https://github.com/orgs/folkehelseinstituttet/teams/dashboards) One drat repository (https://folkehelseinstituttet.github.io/drat/) One travis-ci.org account (http://travis-ci.org/folkehelseinstituttet) One travis-ci.com account (http://travis-ci.com/folkehelseinstituttet) One Docker hub account (http://hub.docker.com/u/raw996/) At least three computers:  Production linux computer smhb Integration testing linux computer linux Development linux computers (1 per person)   Production Computer - smhb Explanation smhb is designed to be extremely simple. It has two jobs:
+ Updating raw996/dashboards_r:production, raw996/dashboards_shiny:production, and raw996/dashboards_nginx:production Making sure that docker-compose-prod.</description>
+    </item>
+    
+    <item>
+      <title>1. Introduction</title>
+      <link>/dashboards/introduction/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/dashboards/introduction/</guid>
+      <description>Executive summary The dashboards project is a project at FHI concerned with running automated analyses on data.
+In principle, the dashboards project is split up into two parts:
+ The umbrella infrastructure (i.e. Docker containers, continuous integration, chron jobs, etc.) The R package for each automated analysis  What is an automated analysis? An automated analysis is any analysis that:
+ Will be repeated multiple times in the future Always has an input dataset with consistent file structure Always has the same expected output (e.</description>
     </item>
     
   </channel>
