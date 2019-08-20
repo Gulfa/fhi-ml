@@ -5,15 +5,28 @@ layout: center
 
 # Registration
 
-https://folkehelse-my.sharepoint.com/:x:/g/personal/richardaubrey_white_fhi_no/EWuoogyngJBPuTQBsbJ--GgBNujH-oFTbYczxBZCma_vLg?e=YpmiMx
+[Register for each course here.](https://folkehelse-my.sharepoint.com/:x:/g/personal/richardaubrey_white_fhi_no/EWuoogyngJBPuTQBsbJ--GgBNujH-oFTbYczxBZCma_vLg?e=YpmiMx)
 
-# Course files
+You may register as:
 
-https://folkehelse-my.sharepoint.com/:f:/g/personal/richardaubrey_white_fhi_no/EtKgxNOexhFGp5fOIoymstgBoUUtfeEYwGOOEipncX6tLA?e=ZCdoUh
+- Oslo student (25 places available)
+- Bergen student (15 places available)
+- Remote student (5 places available, please contact RichardAubrey.White@fhi.no)
+- Oslo waitlist (if you aren't in the first 25 to register)
+
+It is free to register and attend the course.
+
+All courses are recorded and available for your own viewing within 7 days of the course taking place.
+
+# Course files and recordings
+
+[All course files and video recordings are available here.](https://folkehelse-my.sharepoint.com/:f:/g/personal/richardaubrey_white_fhi_no/EtKgxNOexhFGp5fOIoymstgBoUUtfeEYwGOOEipncX6tLA?e=ZCdoUh)
+
+Course files and recordings from the Spring 2019 semester are also available.
 
 # Contact points
 
-Oslo: RichardAubrey.White@fhi.no
+Oslo/admin/remote students: RichardAubrey.White@fhi.no
 
 Bergen: Nina-Jeanette.Quille@fhi.no
 
@@ -96,13 +109,31 @@ tab <- huxtable::hux(
 cat(huxtable::to_html(tab))
 ```
 
-Thirdly, we would like to take this opportunity to tell you that if you want to participate in the R courses, you will need to bring with you a laptop that has R and RStudio installed on it. Please make sure that R and RStudio work on your laptop before you show up at the course!
- 
+To participate in the course you will need to:
 
-
-
+- Register
+- Bring with you a laptop that has R and RStudio installed on it
+- Check that R and RStudio work on your laptop before you show up at the course!
 
 # Teacher information
 
+Thank you for volunteering to be a teacher of a course!
+
+To be a teacher you will need to:
+
+- Be available from 1100-1300 on the day of the course (i.e. setup and packdown time)
+- Have skype for business installed (and working) on your laptop
+- Have R and RStudio installed and working on your laptop
+- Test that you can share your screen (R+RStudio) over skype for business before the day of the course
+- Create a course that is (approximately) 45 minutes of lecturing and 45 minutes of practical exercises
+- Your course will primarily consist of R-scripts (i.e. `.R` files) with comments inside them
+- You will give exercises as homework for the students (roughly 30 minutes of exercises)
+
 # Helper information
 
+Thank you for volunteering to be a helper of a course!
+
+To be a helper you will need to:
+
+- Be available from 1100-1300 on the day of the course (i.e. setup and packdown time)
+- Have a good understanding of R
