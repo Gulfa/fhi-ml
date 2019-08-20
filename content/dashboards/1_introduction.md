@@ -2,7 +2,7 @@
 title: 1. Introduction
 author: Richard White
 date: '2019-08-20'
-slug: this-is-a-test
+slug: introduction 
 categories:
 tags: 
 - test

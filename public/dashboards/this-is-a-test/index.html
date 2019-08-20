@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.57.2" />
 
 
-<title>4. Contributing Quickstart - FHI ML</title>
-<meta property="og:title" content="4. Contributing Quickstart - FHI ML">
+<title>2b. Infrastructure (Docker) - FHI ML</title>
+<meta property="og:title" content="2b. Infrastructure (Docker) - FHI ML">
 
 
   <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -57,190 +57,125 @@
   <article class="article">
     
 
-    <h1 class="article-title">4. Contributing Quickstart</h1>
+    <h1 class="article-title">2b. Infrastructure (Docker)</h1>
 
     
 
     <div class="article-content">
       
 
-<h2 id="quickstart">Quickstart</h2>
+<h1 id="analysis-docker-image">Analysis Docker Image</h1>
 
-<ol>
-<li>Create a project folder for your code (let us say <code>~/git/dashboards</code>). This folder will be accessible from inside your Docker container as <code>/dashboards/</code></li>
-<li>Create a project folder for your data (let us say <code>~/data/</code>).</li>
-<li>Clone the following repos inside <code>~/git/dashboards</code>:
+<h2 id="images">Images</h2>
 
-<ul>
-<li><a href="https://github.com/raubreywhite/dashboards_control/">https://github.com/raubreywhite/dashboards_control/</a> (private)</li>
-</ul></li>
-<li>Fork the following repos, and then clone the forks to your computer inside <code>~/git/dashboards</code> (depending on which project you are working on):
+<p>Our analysis Docker images are based off the <a href="https://rocker-project.org">rocker</a> images. More specifically, the <a href="https://hub.docker.com/r/rocker/verse/">rocker/verse:3.5.0</a> image.</p>
 
-<ul>
-<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspuls/">https://github.com/folkehelseinstituttet/dashboards_sykdomspuls/</a></li>
-<li><a href="https://github.com/folkehelseinstituttet/dashboards_normomo/">https://github.com/folkehelseinstituttet/dashboards_normomo/</a></li>
-<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspulspdf/">https://github.com/folkehelseinstituttet/dashboards_sykdomspulspdf/</a></li>
-<li><a href="https://github.com/folkehelseinstituttet/dashboards_noispiah/">https://github.com/folkehelseinstituttet/dashboards_noispiah/</a></li>
-<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspulslog/">https://github.com/folkehelseinstituttet/dashboards_sykdomspulslog/</a></li>
-</ul></li>
+<p>This Docker image is then expanded upon by a separate Dockerfile <a href="https://github.com/raubreywhite/docker/blob/master/dhadley/Dockerfile">raw996/dhadley</a>. This Docker image is automatically rebuilt by <code>Jenkins</code> on <code>linux</code> whenever the repository is updated. The resultant Docker image is pushed to <a href="https://hub.docker.com/r/raw996/dhadley/">raw996/dhadley:3.5.0</a>. This image is a general-purpose analysis image, with no sensitive information in it.</p>
 
-<li><p>For each repo, add the folkehelseinstitutet repository as your upstream:</p>
+<p>This Docker image is then expanded upon by a separate Dockerfile <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r</a>. This Docker image is automatically rebuilt by <code>Jenkins</code> on <code>linux</code> whenever the repository is updated. The resultant Docker image is locally tagged as <code>raw996/dashboards_r:test</code> and then a number of integration tests are performed on it. If the integration tests are passed, then the Docker image is retagged and pushed to <a href="https://hub.docker.com/r/raw996/dashboards_r/">raw996/dashboards_r:production</a>. This image is private as it contains passwords and email addresses.</p>
 
-<pre><code>git remote add upstream https://github.com/folkehelseinstituttet/ORIGINAL_REPOSITORY.git
-</code></pre></li>
+<h2 id="file-structure">File Structure</h2>
 
-<li><p>In your <code>~/.profile</code> add the following three lines:</p>
+<p>Inside <code>raw996/dashboards_r</code> we have the following file structure:</p>
 
-<pre><code>export DASHBOARDS_DATA=~/data/
-export DASHBOARDS_FOLDER=~/git/dashboards/
-export PATH=$PATH:$DASHBOARDS_FOLDER/dashboards_control/bin/
-</code></pre></li>
+<pre><code>/data_raw/
+  |-- normomo/
+  |-- noispiah/
+  |-- sykdomspuls/
+  |-- sykdomspulspdf/
+  |-- sykdomspulslog/
+/data_clean/
+  |-- normomo/
+  |-- noispiah/
+  |-- sykdomspuls/
+  |-- sykdomspulspdf/
+  |-- sykdomspulslog/
+/data_app/
+  |-- normomo/
+  |-- noispiah/
+  |-- sykdomspuls/
+  |-- sykdomspulspdf/
+  |-- sykdomspulslog/
+/results/
+  |-- normomo/
+  |-- noispiah/
+  |-- sykdomspuls/
+  |-- sykdomspulspdf/
+  |-- sykdomspulslog/
+/usr/local/lib/R/site-library/  &lt;soft linked to /r&gt;
+  |-- &lt;OTHER R PACKAGES INSTALLED HERE&gt;/
+  |-- fhi/
+  |-- normomo/
+  |-- noispiah/
+  |-- sykdomspuls/
+  |-- sykdomspulspdf/
+  |-- sykdomspulslog/
+  |-- &lt;OTHER R PACKAGES INSTALLED HERE&gt;/
 
-<li><p>Build your Dockerfiles:</p>
+/tmp/computer &lt;computer name&gt;
 
-<pre><code>docker_build.sh
-</code></pre></li>
+/etc/secret.sh
 
-<li><p>A number of folders will have been automatically created (see below). Please put in your development datafiles into the appropriate <code>data_raw/</code> folder:</p>
+/etc/gmailr/mail.json
+/etc/gmailr/.httr-oauth
+/etc/gmailr/emails.xlsx
+/etc/gmailr/emails_test.xlsx
+/etc/gmailr/emails_sykdomspuls_alert.xlsx
+/etc/gmailr/emails_sykdomspuls_alert_test.xlsx
 
-<pre><code>- $DASHBOARDS_DATA/
-|-- data_app/
-|-- sykdomspuls/
-|-- normomo/
-|-- sykdomspulslog/
-|-- sykdomspulspdf/
-|-- data_clean/
-|-- sykdomspuls/
-|-- normomo/
-|-- sykdomspulslog/
-|-- sykdomspulspdf/
-|-- data_raw/
-|-- sykdomspuls/
-|-- normomo/
-|-- sykdomspulslog/
-|-- sykdomspulspdf/
-|-- results/
-|-- sykdomspuls/
-|-- normomo/
-|-- sykdomspulslog/
-|-- sykdomspulspdf/
-</code></pre></li>
-</ol>
+/etc/cron.d/simple-cron
+/etc/auto.mounts
 
-<p>9 Run your docker-compose:</p>
-
-<pre><code>dev_up.sh
+/etc/cont-init.d/add_cron
+/etc/cont-init.d/add_autofs
 </code></pre>
 
-<ol>
-<li>Open a browser and go to <a href="http://localhost:8788/">http://localhost:8788/</a></li>
-<li>Login using <code>username=rstudio</code> and <code>password=rstudio1</code></li>
-<li>Using the project menu, open the project corresponding to the automated analysis you are interested in. This should be located at <code>/dashboards/</code>.</li>
-</ol>
+<p>Note that we have a soft link between <code>/r</code> and <code>/usr/local/lib/R/site-library/</code>.</p>
 
-<h2 id="newautomatedanalysis">New Automated Analysis</h2>
+<h2 id="cron">cron</h2>
 
-<p>This will walk you through the creation of a new automated analysis called &ldquo;yyyy&rdquo;.</p>
+<p>We use <a href="https://en.wikipedia.org/wiki/Cron">cron</a> to schedule the analyses. The schedule is specified in <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/crontab">crontab</a>.</p>
 
-<ol>
-<li>Create a new repository on <a href="https://github.com/folkehelseinstituttet">folkehelseinstituttet</a> with the name <code>dashboards_yyyy</code>.</li>
-<li>Fork this repository to your Github account</li>
-<li>Clone the forked repository to <code>~/git/dashboards/dashboards_xxxx</code></li>
-<li>Download <a href="https://github.com/folkehelseinstituttet/dashboards_xxxx">dashboards_template</a> and copy all of its contents into <code>~/git/dashboards/dashboards_yyyy</code></li>
+<p>The cronjobs are only activated when the environmental variable <code>ADD=cron</code> is defined. Cronjobs are then activated through <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/add_cron.sh">add_cron.sh</a>.</p>
 
-<li><p>Edit the following files:</p>
+<p>In principle, cronjobs should only be activated on <code>smhb</code>.</p>
 
-<ul>
-<li><code>~/git/dashboards/dashboards_yyyy/DESCRIPTION</code> (<code>Package: xxxx</code> -&gt; <code>Package: yyyy</code>)</li>
-<li><code>~/git/dashboards/dashboards_yyyy/tests/testthat.R</code> (<code>library(xxxx)</code>-&gt;<code>library(yyyy)</code>)</li>
-<li><code>~/git/dashboards/dashboards_yyyy/.travis.yml</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
-<li><code>~/git/dashboards/dashboards_yyyy/inst/bin/0_run.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
-<li><code>~/git/dashboards/dashboards_yyyy/inst/src/RunProcess.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
-<li><code>~/git/dashboards/dashboards_yyyy/inst/src/RunTest.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)
-<br /></li>
-</ul></li>
+<h2 id="autofs">autofs</h2>
 
-<li><p>Ask Richard to log into travis-ci.com and add the <code>GITHUB_PAT</code> environmental variable to activate continuous integration for <code>yyyy</code></p></li>
+<p>We use <a href="https://help.ubuntu.com/community/Autofs">autofs</a> to connect to the F network. The network locations, username, and password are specified in <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/auto.mounts">auto.mounts</a>.</p>
 
-<li><p>Submit pull requests and ensure that:</p>
+<p>Autofs is only activated when the environmental variable <code>ADD_AUTOFS=yes</code> is defined. Autofs is then activated through <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/add_autofs.sh">add_autofs.sh</a>.</p>
 
-<ul>
-<li>Everything works</li>
-<li>The package is successfully build and included in <a href="https://github.com/folkehelseinstituttet/drat/tree/gh-pages/src/contrib">https://github.com/folkehelseinstituttet/drat/tree/gh-pages/src/contrib</a></li>
-</ul></li>
-</ol>
+<p>In principle, autofs should only be activated on <code>smhb</code>.</p>
 
-<p><strong>You cannot proceed any further until Step 7 works properly (i.e. the package is included in the drat repository).</strong></p>
+<h2 id="emails">Emails</h2>
 
-<ol>
-<li>Add your package under the secton &ldquo;## DRAT PACKAGES FROM FHI&rdquo; at <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile</a></li>
-<li>Create the 4 folders <code>data_raw</code>, <code>data_clean</code>, <code>results</code>, <code>data_app</code> at <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile</a></li>
-<li>Add your package&rsquo;s <a href="#Runsh">0_run.sh</a> to <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/crontab">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/crontab</a></li>
-<li>Add your package&rsquo;s <a href="#integrationtesting">test_yyyy.sh</a> to <code>Jenkins</code> on <code>Linux</code></li>
-<li>Hope it works!</li>
-</ol>
+<p><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/emails.xlsx">emails.xlsx</a> and <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/emails_test.xlsx">emails_test.xlsx</a> contain email lists.</p>
 
-<h2 id="development-guidelines">Development guidelines</h2>
+<p><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/emails_sykdomspuls_alert.xlsx">emails_sykdomspuls_alert.xlsx</a> and <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/emails_sykdomspuls_alert_test.xlsx">emails_sykdomspuls_alert_test.xlsx</a> contain email lists.</p>
 
-<p>We try to follow the <a href="https://guides.github.com/introduction/flow/">GitHub flow</a> for development.</p>
+<p><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/httr-oauth_2017_09_17">httr-oauth_2017_09_17</a> contains the authentication credientials for the gmail account.</p>
 
-<ol>
-<li><p>If you have forked and cloned the project before and it has been a while since you worked on it, merge changes from the original repo to your clone by using:</p>
+<h2 id="passwords-and-keys">Passwords and Keys</h2>
 
-<pre><code>git fetch upstream
-git merge upstream/master
-</code></pre></li>
+<p><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/repo-key">repo-key</a> repo key that gives access to the private <a href="https://github.com/raubreywhite/dashboards_control">raubreywhite/dashboards_control</a> repository.</p>
 
-<li><p>Open the RStudio project file (<code>.Rproj</code>).</p></li>
+<p><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/secret.sh">secret.sh</a> contains passwords.</p>
 
-<li><p>Make your changes:</p>
+<h1 id="reverse-proxy-docker-image">Reverse Proxy Docker Image</h1>
+
+<p>We use nginx as a reverse proxy to make rstudio server available to the developers.</p>
+
+<p>The relevant Dockerfile is <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_nginx/Dockerfile">here</a> and is pushed to <a href="https://hub.docker.com/r/raw996/dashboards_nginx/">raw996/dashboards_nginx:production</a> after integration testing is passed.</p>
+
+<h1 id="dockercompose">Docker Compose</h1>
+
+<p><a href="https://docs.docker.com/compose/">Docker compose</a> is used to integrate these Docker images into the local filesystem. We have multiple docker-compose files for different reasons:</p>
 
 <ul>
-<li>Write your code.</li>
-<li>Test your code (bonus points for adding unit tests).</li>
-<li>Document your code (see function documentation above).</li>
-<li>Do an <code>R CMD check</code> using <code>devtools::check()</code> and aim for 0 errors and warnings.</li>
-<li>Commit your changes locally</li>
-<li>Merge changes from the original repo (again)</li>
-<li>Do an <code>R CMD check</code> using <code>devtools::check()</code> and aim for 0 errors and warnings.</li>
-</ul></li>
-
-<li><p>Commit and push your changes.</p></li>
-
-<li><p>Submit a <a href="https://guides.github.com/activities/forking/#making-a-pull-request">pull request</a>.</p></li>
-
-<li><p>If you are reviewing the pull request, wait until the <a href="www.travis-ci.org">travis-ci</a> unit tests have finished</p>
-
-<pre><code class="language-r">knitr::include_graphics(&quot;images/pull_request_before_checks.png&quot;)
-</code></pre></li>
-
-<li><p>Please make sure that the unit tests <code>PASS</code> before merging in!!</p>
-
-<pre><code class="language-r">knitr::include_graphics(&quot;images/pull_request_checks_failed.png&quot;)
-</code></pre></li>
-</ol>
-
-<h2 id="code-style">Code style</h2>
-
-<ul>
-<li>Reference <a href="http://adv-r.had.co.nz/Style.html">Hadley&rsquo;s style code</a></li>
-<li>&lt;- is preferred over = for assignment</li>
-<li>Indentation is with two spaces, not two or a tab. There should be no tabs in code files.</li>
-<li>if () {} else {} constructions should always use full curly braces even when usage seems unnecessary from a clarity perspective.</li>
-<li>TODO statements should be opened as GitHub issues with links to specific code files and code lines, rather than written inline.</li>
-
-<li><p>Follow Hadley’s suggestion for aligning long functions with many arguments:</p>
-
-<pre><code>long_function_name &lt;- function(a = &quot;a long argument&quot;, 
-                            b = &quot;another argument&quot;,
-                            c = &quot;another long argument&quot;) {
-# As usual code is indented by two spaces.
-}
-</code></pre></li>
-
-<li><p>Never use print() to send text to the console. Instead use fhi::DashboardMsg() as appropriate.</p></li>
-
-<li><p>Use environment variables, not options(), to store global arguments that are used by many or all functions.</p></li>
+<li>For <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-prod.yml">production</a> on <code>smhb</code></li>
+<li>For <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-test.yml">testing</a> on <code>linux</code></li>
+<li>For <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-dev.yml">development</a> on a dev computer</li>
 </ul>
 
     </div>
@@ -278,9 +213,6 @@ git merge upstream/master
 
 
     
-<script src="/js/math-code.js"></script>
-<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
 
     
   </body>
