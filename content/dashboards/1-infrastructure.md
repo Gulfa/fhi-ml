@@ -1,5 +1,5 @@
 ---
-title: 1. Infrastructure
+title: General Infrastructure
 author: Richard White
 date: '2019-01-01'
 slug: infrastructure 
@@ -9,7 +9,7 @@ tags:
 - test
 ---
 
-## Executive summary
+# Executive summary
 
 The dashboards project is a project at FHI concerned with running automated analyses on data.
 
@@ -64,23 +64,23 @@ This is an R package that contains helper functions.
 
 ### Automated analyses R packages
 
-https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/
+https://www.github.com/folkehelseinstituttet/dashboards_sykdomspuls/
 
-https://folkehelseinstituttet.github.io/dashboards_normomo/
+https://www.github.com/folkehelseinstituttet/dashboards_normomo/
 
-https://folkehelseinstituttet.github.io/dashboards_sykdomspulspdf/
+https://www.github.com/folkehelseinstituttet/dashboards_sykdomspulspdf/
 
-https://folkehelseinstituttet.github.io/dashboards_noispiah/
+https://www.github.com/folkehelseinstituttet/dashboards_noispiah/
 
-https://folkehelseinstituttet.github.io/dashboards_sykdomspulslog/
+https://www.github.com/folkehelseinstituttet/dashboards_sykdomspulslog/
 
-## Physical Hardware and Subscriptions
+# Physical Hardware and Subscriptions
 
 - One Github organization (http://github.com/folkehelseinstituttet/)
 - One Github team (https://github.com/orgs/folkehelseinstituttet/teams/dashboards)
 - One [drat](https://github.com/eddelbuettel/drat) repository (https://folkehelseinstituttet.github.io/drat/)
-- One travis-ci.org account (http://travis-ci.org/folkehelseinstituttet)
 - One travis-ci.com account (http://travis-ci.com/folkehelseinstituttet)
+- One travis-ci.org account (http://travis-ci.org/folkehelseinstituttet)
 - One Docker hub account (http://hub.docker.com/u/raw996/)
 - At least three computers:
     1. Production linux computer `smhb`

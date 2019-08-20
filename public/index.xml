@@ -21,17 +21,17 @@
     </item>
     
     <item>
-      <title>2. Sykdomspulsen</title>
+      <title>Sykdomspulsen</title>
       <link>/dashboards/sykdomspulsen/</link>
       <pubDate>Wed, 02 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/dashboards/sykdomspulsen/</guid>
       <description>true  library(sykdomspuls) ## PACKAGE: sykdomspuls ## Version 2019.08.19 at 11:53 ## Developed by Richard White, Gunnar Ro ## Department of Infectious Disease Epidemiology and Modelling ## Norwegian Institute of Public Health ## https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/ sykdomspuls requres a specific raw data format. We require one (or less) rows for each structural variable:
-print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_STRUCTURAL)) ## character(0) For each row, the variables saved in sykdomspuls::CONFIG$SYNDROMES and sykdomspuls::VARS$REQ_DATA_RAW_OTHER contain the number of consultations that occurred for that combination of structural variables.</description>
+print(as.character(sykdomspuls::VARS$REQ_DATA_RAW)) ## [1] &amp;quot;age&amp;quot; &amp;quot;date&amp;quot; &amp;quot;Kontaktype&amp;quot; ## [4] &amp;quot;Praksis&amp;quot; &amp;quot;municip&amp;quot; &amp;quot;influensa&amp;quot; ## [7] &amp;quot;gastro&amp;quot; &amp;quot;respiratoryinternal&amp;quot; &amp;quot;respiratoryexternal&amp;quot; ## [10] &amp;quot;lungebetennelse&amp;quot; &amp;quot;bronkitt&amp;quot; &amp;quot;skabb&amp;quot; ## [13] &amp;quot;emerg1&amp;quot; &amp;quot;emerg2&amp;quot; &amp;quot;emerg3&amp;quot; ## [16] &amp;quot;emerg4&amp;quot; &amp;quot;emerg5&amp;quot; &amp;quot;consult&amp;quot; For each row, the variables saved in sykdomspuls::CONFIG$SYNDROMES and sykdomspuls::VARS$REQ_DATA_RAW_OTHER contain the number of consultations that occurred for that combination of structural variables.</description>
     </item>
     
     <item>
-      <title>1. Infrastructure</title>
+      <title>General Infrastructure</title>
       <link>/dashboards/infrastructure/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       

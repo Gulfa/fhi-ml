@@ -1,5 +1,5 @@
 ---
-title: 2. Sykdomspulsen
+title: Sykdomspulsen
 author: Richard White
 date: '2019-01-02'
 slug: sykdomspulsen
@@ -16,7 +16,7 @@ library(sykdomspuls)
 `sykdomspuls` requres a specific raw data format. We require one (or less) rows for each structural variable:
 
 ```{r}
-print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_STRUCTURAL))
+print(as.character(sykdomspuls::VARS$REQ_DATA_RAW))
 ```
 
 For each row, the variables saved in `sykdomspuls::CONFIG$SYNDROMES` and `sykdomspuls::VARS$REQ_DATA_RAW_OTHER` contain the number of consultations that occurred for that combination of structural variables.
