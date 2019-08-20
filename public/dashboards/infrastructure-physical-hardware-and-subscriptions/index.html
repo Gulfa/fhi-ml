@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.57.2" />
+
+
+<title>2a Infrastructure (Physical Hardware and Subscriptions) - FHI ML</title>
+<meta property="og:title" content="2a Infrastructure (Physical Hardware and Subscriptions) - FHI ML">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <ul class="nav-links">
+    
+    <li><a href="/">About Me</a></li>
+    
+    <li><a href="/dashboards/">Dashboards</a></li>
+    
+    <li><a href="https://github.com/folkehelseinstituttet/">GitHub</a></li>
+    
+    <li><a href="/post/">Post</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+  <article class="article">
+    
+
+    <h1 class="article-title">2a Infrastructure (Physical Hardware and Subscriptions)</h1>
+
+    
+
+    <div class="article-content">
+      
+
+<h2 id="physical-hardware-and-subscriptions">Physical Hardware and Subscriptions</h2>
+
+<ul>
+<li>One Github organization (<a href="http://github.com/folkehelseinstituttet/">http://github.com/folkehelseinstituttet/</a>)</li>
+<li>One Github team (<a href="https://github.com/orgs/folkehelseinstituttet/teams/dashboards">https://github.com/orgs/folkehelseinstituttet/teams/dashboards</a>)</li>
+<li>One <a href="https://github.com/eddelbuettel/drat">drat</a> repository (<a href="https://folkehelseinstituttet.github.io/drat/">https://folkehelseinstituttet.github.io/drat/</a>)</li>
+<li>One travis-ci.org account (<a href="http://travis-ci.org/folkehelseinstituttet">http://travis-ci.org/folkehelseinstituttet</a>)</li>
+<li>One travis-ci.com account (<a href="http://travis-ci.com/folkehelseinstituttet">http://travis-ci.com/folkehelseinstituttet</a>)</li>
+<li>One Docker hub account (<a href="http://hub.docker.com/u/raw996/">http://hub.docker.com/u/raw996/</a>)</li>
+<li>At least three computers:
+
+<ol>
+<li>Production linux computer <code>smhb</code></li>
+<li>Integration testing linux computer <code>linux</code></li>
+<li>Development linux computers (1 per person)</li>
+</ol></li>
+</ul>
+
+<h2 id="production-computer-smhb">Production Computer - smhb</h2>
+
+<h3 id="explanation">Explanation</h3>
+
+<p><code>smhb</code> is designed to be extremely simple. It has two jobs:</p>
+
+<ol>
+<li>Updating <a href="https://hub.docker.com/r/raw996/dashboards_r/">raw996/dashboards_r:production</a>, <a href="https://hub.docker.com/r/raw996/dashboards_shiny/">raw996/dashboards_shiny:production</a>, and <a href="https://hub.docker.com/r/raw996/dashboards_nginx/">raw996/dashboards_nginx:production</a></li>
+<li>Making sure that <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-prod.yml">docker-compose-prod.yml</a> is running</li>
+</ol>
+
+<p>We purposefully minimize all integration with the base machine, because this enables us to be deploy-environment independent and to move our deployment anywhere with minimal hassle.</p>
+
+<h3 id="requirements">Requirements</h3>
+
+<ul>
+<li>Git</li>
+<li>Docker Engine - Community (<a href="https://www.docker.com/products/docker-engine">https://www.docker.com/products/docker-engine</a>)</li>
+</ul>
+
+<h3 id="file-structure">File Structure</h3>
+
+<pre><code>/home/raw996/git/dashboards_control/
+</code></pre>
+
+<h3 id="crontab">crontab</h3>
+
+<pre><code># m h  dom mon dow   command
+5 1 * * * /home/raw996/git/dashboards_control/bin/prod_update.sh
+@reboot /home/raw996/git/dashboards_control/bin/prod_update.sh
+</code></pre>
+
+<h2 id="integration-testing-linux">Integration Testing - linux</h2>
+
+<h3 id="explanation-1">Explanation</h3>
+
+<p><code>linux</code> has three jobs:</p>
+
+<ol>
+<li>Building [raw996/dhadley](<a href="https://github.com/raubreywhite/docker/blob/master/dhadley/Dockerfile">https://github.com/raubreywhite/docker/blob/master/dhadley/Dockerfile</a></li>
+<li>Integration testing for the automated analyses</li>
+<li>Pushing <a href="https://hub.docker.com/r/raw996/dashboards_r/">raw996/dashboards_r:production</a>, <a href="https://hub.docker.com/r/raw996/dashboards_shiny/">raw996/dashboards_shiny:production</a>, and <a href="https://hub.docker.com/r/raw996/dashboards_nginx/">raw996/dashboards_nginx:production</a> to Docker hub after successful integration testing</li>
+</ol>
+
+<p>Integration testing happens by Jenkins running:</p>
+
+<ul>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/bin/test_noispiah.sh">test_noispiah.sh</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/bin/test_normomo.sh">test_normomo.sh</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/bin/test_sykdomspuls.sh">test_sykdomspuls.sh</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/bin/test_sykdomspulslog.sh">test_sykdomspulslog.sh</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/bin/test_sykdomspulspdf.sh">test_sykdomspulspdf.sh</a></li>
+</ul>
+
+<h3 id="requirements-1">Requirements</h3>
+
+<ul>
+<li>Git</li>
+<li>Docker Engine - Community (<a href="https://www.docker.com/products/docker-engine">https://www.docker.com/products/docker-engine</a>)</li>
+<li>Jenkins installed via a Docker container (<a href="http://jenkins.io">http://jenkins.io</a>)</li>
+</ul>
+
+<h3 id="file-structure-1">File Structure</h3>
+
+<pre><code>/home/raw996/
+  |-- docker-compose-jenkins/
+    |-- docker-compose.yml
+  |-- data/
+    |-- data_app/
+      |-- normomo/
+      |-- sykdomspuls/
+    |-- data_clean/
+      |-- normomo/
+      |-- sykdomspuls/
+    |-- data_raw/
+      |-- normomo/
+        |-- FHIDOD2_20170425.txt
+      |-- sykdomspuls/
+        |-- partially_formatted_2017_08_01.txt
+    |-- data_results/
+      |-- normomo/
+      |-- sykdomspuls/
+  |-- jenkins/
+</code></pre>
+
+<h2 id="development-computer-dev">Development Computer - dev</h2>
+
+<h3 id="requirements-2">Requirements</h3>
+
+<ul>
+<li>Git</li>
+<li>Docker Engine - Community (<a href="https://www.docker.com/products/docker-engine">https://www.docker.com/products/docker-engine</a>)</li>
+</ul>
+
+<h2 id="travis">Unit Testing - travis-ci</h2>
+
+<p><a href="http://travis-ci.org/folkehelseinstituttet">Travis-ci</a> is used for  <a href="http://r-pkgs.had.co.nz/check.html#travis">unit testing of packages</a>. If the R package passes all tests, then we use <a href="https://github.com/eddelbuettel/drat">drat</a> to deploy a built version of the package to Folkehelseinstituttet&rsquo;s R repository: <a href="https://folkehelseinstituttet.github.io/drat/">https://folkehelseinstituttet.github.io/drat/</a>.</p>
+
+    </div>
+  </article>
+
+    
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.57.2" />
+
+
+<title>1. Introduction - FHI ML</title>
+<meta property="og:title" content="1. Introduction - FHI ML">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <ul class="nav-links">
+    
+    <li><a href="/">About Me</a></li>
+    
+    <li><a href="/dashboards/">Dashboards</a></li>
+    
+    <li><a href="https://github.com/folkehelseinstituttet/">GitHub</a></li>
+    
+    <li><a href="/post/">Post</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+  <article class="article">
+    
+
+    <h1 class="article-title">1. Introduction</h1>
+
+    
+
+    <div class="article-content">
+      
+
+<h2 id="executive-summary">Executive summary</h2>
+
+<p>The dashboards project is a project at FHI concerned with running automated analyses on data.</p>
+
+<p>In principle, the dashboards project is split up into two parts:</p>
+
+<ol>
+<li>The umbrella infrastructure (i.e. Docker containers, continuous integration, chron jobs, etc.)</li>
+<li>The R package for each automated analysis</li>
+</ol>
+
+<h2 id="what-is-an-automated-analysis">What is an automated analysis?</h2>
+
+<p>An automated analysis is any analysis that:</p>
+
+<ol>
+<li>Will be repeated multiple times in the future</li>
+<li>Always has an input dataset with consistent file structure</li>
+<li>Always has the same expected output (e.g. tables, graphs, reports)</li>
+</ol>
+
+<h2 id="why-not-have-one-project-for-each-automated-analysis">Why not have one project for each automated analysis?</h2>
+
+<p>Automated analyses have a lot of code and infrastructure in common.</p>
+
+<p>Automated analyses:</p>
+
+<ol>
+<li>Need their code to be tested via unit testing to ensure the results are correct</li>
+<li>Need their code to be tested via integration testing to ensure everything runs</li>
+<li>Need to be run at certain times</li>
+<li>Need to be able to send emails notifying people that the analyses have finished running</li>
+<li>Need to make their results accessible to the relevant people</li>
+</ol>
+
+<p>By combining them all in one umbrella project we can force everyone to use the same infrastructure and coding principles, so we:</p>
+
+<ol>
+<li>Only need to solve a problem once</li>
+<li>Only need to maintain one system</li>
+<li>Can easily work on multiple projects, as we all speak the same language</li>
+</ol>
+
+<h2 id="important-repositories">Important repositories</h2>
+
+<h3 id="infrastructure">Infrastructure</h3>
+
+<p><a href="https://github.com/raubreywhite/dashboards_control/">https://github.com/raubreywhite/dashboards_control/</a> (private)</p>
+
+<p>This contains the Dockerfiles, cronfiles, all bash scripts, etc.</p>
+
+<p><a href="http://github.com/raubreywhite/docker/">http://github.com/raubreywhite/docker/</a></p>
+
+<p>This contains the base analysis Dockerfile</p>
+
+<p><a href="https://rocker-project.org">https://rocker-project.org</a></p>
+
+<p><a href="https://folkehelseinstituttet.github.io/fhi/">https://folkehelseinstituttet.github.io/fhi/</a></p>
+
+<p>This is an R package that contains helper functions.</p>
+
+<h3 id="automated-analyses-r-packages">Automated analyses R packages</h3>
+
+<p><a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/">https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/</a></p>
+
+<p><a href="https://folkehelseinstituttet.github.io/dashboards_normomo/">https://folkehelseinstituttet.github.io/dashboards_normomo/</a></p>
+
+<p><a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspulspdf/">https://folkehelseinstituttet.github.io/dashboards_sykdomspulspdf/</a></p>
+
+<p><a href="https://folkehelseinstituttet.github.io/dashboards_noispiah/">https://folkehelseinstituttet.github.io/dashboards_noispiah/</a></p>
+
+<p><a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspulslog/">https://folkehelseinstituttet.github.io/dashboards_sykdomspulslog/</a></p>
+
+    </div>
+  </article>
+
+    
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+
+    
+  </body>
+</html>
+

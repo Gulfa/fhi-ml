@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.57.2" />
+
+
+<title>2c. Infrastructure (Scripts) - FHI ML</title>
+<meta property="og:title" content="2c. Infrastructure (Scripts) - FHI ML">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <ul class="nav-links">
+    
+    <li><a href="/">About Me</a></li>
+    
+    <li><a href="/dashboards/">Dashboards</a></li>
+    
+    <li><a href="https://github.com/folkehelseinstituttet/">GitHub</a></li>
+    
+    <li><a href="/post/">Post</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+  <article class="article">
+    
+
+    <h1 class="article-title">2c. Infrastructure (Scripts)</h1>
+
+    
+
+    <div class="article-content">
+      
+
+<h1 id="overview">Overview</h1>
+
+<p>Most of the bash scripts, Docker files, passwords, etc. are all hosted at the private Github repository <a href="https://github.com/raubreywhite/dashboards_control">raubreywhite/dashboards_control</a>.</p>
+
+<pre><code>- $DASHBOARDS_FOLDER/dashboards_control/
+  |-- bin/
+  |  |-- dev_down.sh
+  |  |-- dev_up.sh
+  |  |-- docker_build.sh
+  |  |-- docker_login.sh
+  |  |-- docker_push_test_to_prod.sh
+  |  |-- prod_down.sh
+  |  |-- prod_up.sh
+  |  |-- prod_update.sh
+  |  |-- public.sh
+  |  |-- test_noispiah.sh
+  |  |-- test_normomo.sh
+  |  |-- test_sykdomspuls_log.sh
+  |  |-- test_sykdomspuls_pdf.sh
+  |  |-- test_sykdomspuls.sh
+  |-- docker-compose-api.yml
+  |-- docker-compose-dev.yml
+  |-- docker-compose-prod.yml
+  |-- docker-compose-test.yml
+</code></pre>
+
+<h1 id="bash-scripts">Bash scripts</h1>
+
+<h2 id="dashboards-folder-dashboards-control-bin-dev-down-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/dev_down.sh</h2>
+
+<p>Dev script to shut down docker-compose</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-dev-up-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/dev_up.sh</h2>
+
+<p>Dev script to start docker-compose</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-docker-build-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_build.sh</h2>
+
+<p>Builds all relevant Docker containers</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-docker-login-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_login.sh</h2>
+
+<p>Logs in to docker-hub</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-docker-push-test-to-prod-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_push_test_to_prod.sh</h2>
+
+<p>Retags &lsquo;test&rsquo; Docker containers to &lsquo;production&rsquo; and pushs them to docker-hub</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-prod-down-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_down.sh</h2>
+
+<p>Only to be used on the production computer <code>smhb</code>. This bash script stops the docker-compose.</p>
+
+<p>Note: This script is not used.</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-prod-up-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_up.sh</h2>
+
+<p>Only to be used on the production computer <code>smhb</code>. This bash script starts up the docker-compose.</p>
+
+<p>Note: This script is not used.</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-prod-update-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_update.sh</h2>
+
+<p>Only to be used on the production computer <code>smhb</code>. This bash script:</p>
+
+<ol>
+<li>Removes unused Docker container/images (important so we don&rsquo;t run out of space)</li>
+<li>Runs some scripts required for network access</li>
+<li>Pulls the latest version of <a href="https://github.com/raubreywhite/dashboards_control">raubreywhite/dashboards_control</a></li>
+<li>Stops the <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-prod.yml">docker-compose-prod.yml</a></li>
+<li>Pulls the latest production images for:
+
+<ul>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:production</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_nginx/Dockerfile">raw996/dashboards_nginx:production</a></li>
+<li><a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_shiny/Dockerfile">raw996/dashboards_shiny:production</a></li>
+</ul></li>
+<li>Starts the <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/docker-compose-prod.yml">docker-compose-prod.yml</a></li>
+</ol>
+
+<h2 id="dashboards-folder-dashboards-control-bin-public-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/public.sh</h2>
+
+<p>Lists a bunch of environmental variables</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-test-noispiah-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_noispiah.sh</h2>
+
+<p>Runs <code>/r/noispiah/src/RunTest.R</code> inside <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:test</a></p>
+
+<p>Note: This script is generally only run by <code>Jenkins</code> on <code>linux</code> as the integration testing for <a href="https://folkehelseinstituttet.github.io/dashboards_noispiah/">noispiah</a>.</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-test-normomo-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_normomo.sh</h2>
+
+<p>Runs <code>/r/normomo/src/RunTest.R</code> inside <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:test</a></p>
+
+<p>Note: This script is generally only run by <code>Jenkins</code> on <code>linux</code> as the integration testing for <a href="https://folkehelseinstituttet.github.io/dashboards_normomo/">normomo</a>.</p>
+
+<h3 id="dashboards-folder-dashboards-control-bin-test-sykdomspuls-log-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls_log.sh</h3>
+
+<p>Runs <code>/r/sykdomspulslog/src/RunTest.R</code> inside <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:test</a></p>
+
+<p>Note: This script is generally only run by <code>Jenkins</code> on <code>linux</code> as the integration testing for <a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspuls_log/">sykdomspuls_log</a>.</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-test-sykdomspuls-pdf-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls_pdf.sh</h2>
+
+<p>Runs <code>/r/sykdomspulspdf/src/RunTest.R</code> inside <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:test</a></p>
+
+<p>Note: This script is generally only run by <code>Jenkins</code> on <code>linux</code> as the integration testing for <a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspuls_pdf/">sykdomspuls_pdf</a>.</p>
+
+<h2 id="dashboards-folder-dashboards-control-bin-test-sykdomspuls-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls.sh</h2>
+
+<p>Runs <code>/r/sykdomspuls/src/RunTest.R</code> inside <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">raw996/dashboards_r:test</a></p>
+
+<p>Note: This script is generally only run by <code>Jenkins</code> on <code>linux</code> as the integration testing for <a href="https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/">sykdomspuls</a>.</p>
+
+    </div>
+  </article>
+
+    
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
