@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.57.2" />
 
 
-<title>Test - FHI ML</title>
-<meta property="og:title" content="Test - FHI ML">
+<title>4. Contributing Quickstart - FHI ML</title>
+<meta property="og:title" content="4. Contributing Quickstart - FHI ML">
 
 
   <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -19,6 +19,11 @@
 
 
 
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
 
 
 
@@ -52,12 +57,191 @@
   <article class="article">
     
 
-    <h1 class="article-title">Test</h1>
+    <h1 class="article-title">4. Contributing Quickstart</h1>
 
     
 
     <div class="article-content">
-      <p>Hello how are you</p>
+      
+
+<h2 id="quickstart">Quickstart</h2>
+
+<ol>
+<li>Create a project folder for your code (let us say <code>~/git/dashboards</code>). This folder will be accessible from inside your Docker container as <code>/dashboards/</code></li>
+<li>Create a project folder for your data (let us say <code>~/data/</code>).</li>
+<li>Clone the following repos inside <code>~/git/dashboards</code>:
+
+<ul>
+<li><a href="https://github.com/raubreywhite/dashboards_control/">https://github.com/raubreywhite/dashboards_control/</a> (private)</li>
+</ul></li>
+<li>Fork the following repos, and then clone the forks to your computer inside <code>~/git/dashboards</code> (depending on which project you are working on):
+
+<ul>
+<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspuls/">https://github.com/folkehelseinstituttet/dashboards_sykdomspuls/</a></li>
+<li><a href="https://github.com/folkehelseinstituttet/dashboards_normomo/">https://github.com/folkehelseinstituttet/dashboards_normomo/</a></li>
+<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspulspdf/">https://github.com/folkehelseinstituttet/dashboards_sykdomspulspdf/</a></li>
+<li><a href="https://github.com/folkehelseinstituttet/dashboards_noispiah/">https://github.com/folkehelseinstituttet/dashboards_noispiah/</a></li>
+<li><a href="https://github.com/folkehelseinstituttet/dashboards_sykdomspulslog/">https://github.com/folkehelseinstituttet/dashboards_sykdomspulslog/</a></li>
+</ul></li>
+
+<li><p>For each repo, add the folkehelseinstitutet repository as your upstream:</p>
+
+<pre><code>git remote add upstream https://github.com/folkehelseinstituttet/ORIGINAL_REPOSITORY.git
+</code></pre></li>
+
+<li><p>In your <code>~/.profile</code> add the following three lines:</p>
+
+<pre><code>export DASHBOARDS_DATA=~/data/
+export DASHBOARDS_FOLDER=~/git/dashboards/
+export PATH=$PATH:$DASHBOARDS_FOLDER/dashboards_control/bin/
+</code></pre></li>
+
+<li><p>Build your Dockerfiles:</p>
+
+<pre><code>docker_build.sh
+</code></pre></li>
+
+<li><p>A number of folders will have been automatically created (see below). Please put in your development datafiles into the appropriate <code>data_raw/</code> folder:</p>
+
+<pre><code>- $DASHBOARDS_DATA/
+|-- data_app/
+|-- sykdomspuls/
+|-- normomo/
+|-- sykdomspulslog/
+|-- sykdomspulspdf/
+|-- data_clean/
+|-- sykdomspuls/
+|-- normomo/
+|-- sykdomspulslog/
+|-- sykdomspulspdf/
+|-- data_raw/
+|-- sykdomspuls/
+|-- normomo/
+|-- sykdomspulslog/
+|-- sykdomspulspdf/
+|-- results/
+|-- sykdomspuls/
+|-- normomo/
+|-- sykdomspulslog/
+|-- sykdomspulspdf/
+</code></pre></li>
+</ol>
+
+<p>9 Run your docker-compose:</p>
+
+<pre><code>dev_up.sh
+</code></pre>
+
+<ol>
+<li>Open a browser and go to <a href="http://localhost:8788/">http://localhost:8788/</a></li>
+<li>Login using <code>username=rstudio</code> and <code>password=rstudio1</code></li>
+<li>Using the project menu, open the project corresponding to the automated analysis you are interested in. This should be located at <code>/dashboards/</code>.</li>
+</ol>
+
+<h2 id="newautomatedanalysis">New Automated Analysis</h2>
+
+<p>This will walk you through the creation of a new automated analysis called &ldquo;yyyy&rdquo;.</p>
+
+<ol>
+<li>Create a new repository on <a href="https://github.com/folkehelseinstituttet">folkehelseinstituttet</a> with the name <code>dashboards_yyyy</code>.</li>
+<li>Fork this repository to your Github account</li>
+<li>Clone the forked repository to <code>~/git/dashboards/dashboards_xxxx</code></li>
+<li>Download <a href="https://github.com/folkehelseinstituttet/dashboards_xxxx">dashboards_template</a> and copy all of its contents into <code>~/git/dashboards/dashboards_yyyy</code></li>
+
+<li><p>Edit the following files:</p>
+
+<ul>
+<li><code>~/git/dashboards/dashboards_yyyy/DESCRIPTION</code> (<code>Package: xxxx</code> -&gt; <code>Package: yyyy</code>)</li>
+<li><code>~/git/dashboards/dashboards_yyyy/tests/testthat.R</code> (<code>library(xxxx)</code>-&gt;<code>library(yyyy)</code>)</li>
+<li><code>~/git/dashboards/dashboards_yyyy/.travis.yml</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
+<li><code>~/git/dashboards/dashboards_yyyy/inst/bin/0_run.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
+<li><code>~/git/dashboards/dashboards_yyyy/inst/src/RunProcess.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)</li>
+<li><code>~/git/dashboards/dashboards_yyyy/inst/src/RunTest.sh</code> (<code>xxxx</code>-&gt;<code>yyyy</code>)
+<br /></li>
+</ul></li>
+
+<li><p>Ask Richard to log into travis-ci.com and add the <code>GITHUB_PAT</code> environmental variable to activate continuous integration for <code>yyyy</code></p></li>
+
+<li><p>Submit pull requests and ensure that:</p>
+
+<ul>
+<li>Everything works</li>
+<li>The package is successfully build and included in <a href="https://github.com/folkehelseinstituttet/drat/tree/gh-pages/src/contrib">https://github.com/folkehelseinstituttet/drat/tree/gh-pages/src/contrib</a></li>
+</ul></li>
+</ol>
+
+<p><strong>You cannot proceed any further until Step 7 works properly (i.e. the package is included in the drat repository).</strong></p>
+
+<ol>
+<li>Add your package under the secton &ldquo;## DRAT PACKAGES FROM FHI&rdquo; at <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile</a></li>
+<li>Create the 4 folders <code>data_raw</code>, <code>data_clean</code>, <code>results</code>, <code>data_app</code> at <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/Dockerfile</a></li>
+<li>Add your package&rsquo;s <a href="#Runsh">0_run.sh</a> to <a href="https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/crontab">https://github.com/raubreywhite/dashboards_control/blob/master/infrastructure/dashboards_r/crontab</a></li>
+<li>Add your package&rsquo;s <a href="#integrationtesting">test_yyyy.sh</a> to <code>Jenkins</code> on <code>Linux</code></li>
+<li>Hope it works!</li>
+</ol>
+
+<h2 id="development-guidelines">Development guidelines</h2>
+
+<p>We try to follow the <a href="https://guides.github.com/introduction/flow/">GitHub flow</a> for development.</p>
+
+<ol>
+<li><p>If you have forked and cloned the project before and it has been a while since you worked on it, merge changes from the original repo to your clone by using:</p>
+
+<pre><code>git fetch upstream
+git merge upstream/master
+</code></pre></li>
+
+<li><p>Open the RStudio project file (<code>.Rproj</code>).</p></li>
+
+<li><p>Make your changes:</p>
+
+<ul>
+<li>Write your code.</li>
+<li>Test your code (bonus points for adding unit tests).</li>
+<li>Document your code (see function documentation above).</li>
+<li>Do an <code>R CMD check</code> using <code>devtools::check()</code> and aim for 0 errors and warnings.</li>
+<li>Commit your changes locally</li>
+<li>Merge changes from the original repo (again)</li>
+<li>Do an <code>R CMD check</code> using <code>devtools::check()</code> and aim for 0 errors and warnings.</li>
+</ul></li>
+
+<li><p>Commit and push your changes.</p></li>
+
+<li><p>Submit a <a href="https://guides.github.com/activities/forking/#making-a-pull-request">pull request</a>.</p></li>
+
+<li><p>If you are reviewing the pull request, wait until the <a href="www.travis-ci.org">travis-ci</a> unit tests have finished</p>
+
+<pre><code class="language-r">knitr::include_graphics(&quot;images/pull_request_before_checks.png&quot;)
+</code></pre></li>
+
+<li><p>Please make sure that the unit tests <code>PASS</code> before merging in!!</p>
+
+<pre><code class="language-r">knitr::include_graphics(&quot;images/pull_request_checks_failed.png&quot;)
+</code></pre></li>
+</ol>
+
+<h2 id="code-style">Code style</h2>
+
+<ul>
+<li>Reference <a href="http://adv-r.had.co.nz/Style.html">Hadley&rsquo;s style code</a></li>
+<li>&lt;- is preferred over = for assignment</li>
+<li>Indentation is with two spaces, not two or a tab. There should be no tabs in code files.</li>
+<li>if () {} else {} constructions should always use full curly braces even when usage seems unnecessary from a clarity perspective.</li>
+<li>TODO statements should be opened as GitHub issues with links to specific code files and code lines, rather than written inline.</li>
+
+<li><p>Follow Hadley’s suggestion for aligning long functions with many arguments:</p>
+
+<pre><code>long_function_name &lt;- function(a = &quot;a long argument&quot;, 
+                            b = &quot;another argument&quot;,
+                            c = &quot;another long argument&quot;) {
+# As usual code is indented by two spaces.
+}
+</code></pre></li>
+
+<li><p>Never use print() to send text to the console. Instead use fhi::DashboardMsg() as appropriate.</p></li>
+
+<li><p>Use environment variables, not options(), to store global arguments that are used by many or all functions.</p></li>
+</ul>
 
     </div>
   </article>
@@ -81,7 +265,22 @@
     </div>
     
 
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
     
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 
     
   </body>
