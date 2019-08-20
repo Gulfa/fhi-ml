@@ -114,40 +114,40 @@ true
 print(d)</code></pre>
 <pre><code>##         age       date     Kontaktype  Praksis     municip influensa
 ##      1: 0-4 2006-01-01 Telefonkontakt Fastlege municip1624         3
-##      2: 0-4 2006-01-02 Telefonkontakt Fastlege municip1624         1
+##      2: 0-4 2006-01-02 Telefonkontakt Fastlege municip1624         4
 ##      3: 0-4 2006-01-03 Telefonkontakt Fastlege municip1624         8
 ##      4: 0-4 2006-01-04 Telefonkontakt Fastlege municip1624         6
-##      5: 0-4 2006-01-05 Telefonkontakt Fastlege municip1624         5
+##      5: 0-4 2006-01-05 Telefonkontakt Fastlege municip1624         6
 ##     ---                                                             
-## 227900: 65+ 2019-12-27    Legekontakt Legevakt municip5054         8
-## 227901: 65+ 2019-12-28    Legekontakt Legevakt municip5054         2
-## 227902: 65+ 2019-12-29    Legekontakt Legevakt municip5054         1
-## 227903: 65+ 2019-12-30    Legekontakt Legevakt municip5054         2
-## 227904: 65+ 2019-12-31    Legekontakt Legevakt municip5054         3
+## 227900: 65+ 2019-12-27    Legekontakt Legevakt municip5054         4
+## 227901: 65+ 2019-12-28    Legekontakt Legevakt municip5054         4
+## 227902: 65+ 2019-12-29    Legekontakt Legevakt municip5054         4
+## 227903: 65+ 2019-12-30    Legekontakt Legevakt municip5054         3
+## 227904: 65+ 2019-12-31    Legekontakt Legevakt municip5054         2
 ##         gastro respiratoryinternal respiratoryexternal lungebetennelse
-##      1:      3                   8                   6               4
-##      2:      5                   6                   2               7
-##      3:      2                   4                   7               6
-##      4:      5                   5                   5               2
-##      5:      5                   3                   4               5
+##      1:      6                   3                   5               6
+##      2:      4                   4                  10               4
+##      3:      4                   9                   5               5
+##      4:      8                   3                   7               7
+##      5:      7                   3                   3               7
 ##     ---                                                               
-## 227900:      3                   1                   5               4
-## 227901:      4                   8                   5               4
-## 227902:      3                   3                   2               4
-## 227903:      6                   4                   5               3
-## 227904:      5                   4                   5               1
+## 227900:      6                   2                   7               6
+## 227901:      7                   4                   4              10
+## 227902:      4                   8                   5               2
+## 227903:      6                   7                   4               2
+## 227904:      7                   5                   2               3
 ##         bronkitt skabb emerg1 emerg2 emerg3 emerg4 emerg5 consult
-##      1:        2     4      6      9      7      4      6     123
-##      2:        6     8      7      5      4      7      3     108
-##      3:        5     5      8      0      3      5      3     110
-##      4:        3     6      4      6      6      5      4     112
-##      5:        3     4      7      2      2      5      7      98
+##      1:        4     6      2      3      3      3      3      97
+##      2:        3     6      4      2      3      6      1     106
+##      3:        1     3      6      5      7      5      8     116
+##      4:        4    10      6      2      5      2      5     105
+##      5:        4     9      2      5      5      3      7     113
 ##     ---                                                          
-## 227900:        7     9      7      5      4      6     10     113
-## 227901:        3     7      2      4     10      5      3     104
-## 227902:        5     5      4      8      7      6      3      92
-## 227903:       12     2      3      6      5      4      7     109
-## 227904:        3     6      5      5      5      6      5     108</code></pre>
+## 227900:        3     6      3      3      5      4      2     111
+## 227901:        5     6      3      5      4      7      9     105
+## 227902:        3     6     10      2      5      5      6      96
+## 227903:        7     3      6      2      4      4      3     109
+## 227904:        5     4      8      5      4      4      4     108</code></pre>
 <p>And we can then use the function <code>ValidateDataRaw()</code> to ensure that our fake data is in the correct format:</p>
 <pre class="r"><code>print(ValidateDataRaw(d))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
