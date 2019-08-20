@@ -61,6 +61,103 @@
 
     
 
+    
+
+<aside>
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#executive-summary">Executive summary</a></li>
+<li><a href="#what-is-an-automated-analysis">What is an automated analysis?</a></li>
+<li><a href="#why-not-have-one-project-for-each-automated-analysis">Why not have one project for each automated analysis?</a></li>
+<li><a href="#important-repositories">Important repositories</a>
+<ul>
+<li><a href="#infrastructure">Infrastructure</a></li>
+<li><a href="#automated-analyses-r-packages">Automated analyses R packages</a></li>
+</ul></li>
+<li><a href="#physical-hardware-and-subscriptions">Physical Hardware and Subscriptions</a></li>
+<li><a href="#production-computer-smhb">Production Computer - smhb</a>
+<ul>
+<li><a href="#explanation">Explanation</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#file-structure">File Structure</a></li>
+<li><a href="#crontab">crontab</a></li>
+</ul></li>
+<li><a href="#integration-testing-linux">Integration Testing - linux</a>
+<ul>
+<li><a href="#explanation-1">Explanation</a></li>
+<li><a href="#requirements-1">Requirements</a></li>
+<li><a href="#file-structure-1">File Structure</a></li>
+</ul></li>
+<li><a href="#development-computer-dev">Development Computer - dev</a>
+<ul>
+<li><a href="#requirements-2">Requirements</a></li>
+</ul></li>
+<li><a href="#travis">Unit Testing - travis-ci</a></li>
+</ul></li>
+<li><a href="#analysis-docker-image">Analysis Docker Image</a>
+<ul>
+<li><a href="#images">Images</a></li>
+<li><a href="#file-structure-2">File Structure</a></li>
+<li><a href="#cron">cron</a></li>
+<li><a href="#autofs">autofs</a></li>
+<li><a href="#emails">Emails</a></li>
+<li><a href="#passwords-and-keys">Passwords and Keys</a></li>
+</ul></li>
+<li><a href="#reverse-proxy-docker-image">Reverse Proxy Docker Image</a></li>
+<li><a href="#dockercompose">Docker Compose</a></li>
+<li><a href="#scripts">Scripts</a></li>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#bash-scripts">Bash scripts</a>
+<ul>
+<li><a href="#dashboards-folder-dashboards-control-bin-dev-down-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/dev_down.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-dev-up-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/dev_up.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-docker-build-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_build.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-docker-login-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_login.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-docker-push-test-to-prod-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/docker_push_test_to_prod.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-prod-down-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_down.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-prod-up-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_up.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-prod-update-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/prod_update.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-public-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/public.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-test-noispiah-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_noispiah.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-test-normomo-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_normomo.sh</a>
+<ul>
+<li><a href="#dashboards-folder-dashboards-control-bin-test-sykdomspuls-log-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls_log.sh</a></li>
+</ul></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-test-sykdomspuls-pdf-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls_pdf.sh</a></li>
+<li><a href="#dashboards-folder-dashboards-control-bin-test-sykdomspuls-sh">$DASHBOARDS_FOLDER/dashboards_control/bin/test_sykdomspuls.sh</a></li>
+</ul></li>
+<li><a href="#r-packages">R Packages</a>
+<ul>
+<li><a href="#overview-1">Overview</a></li>
+<li><a href="#requirements-3">Requirements</a></li>
+<li><a href="#deployment-via-travis-ci-and-drat">Deployment via travis-ci and drat</a></li>
+<li><a href="#integration-with-the-local-file-system">Integration with the local file system</a></li>
+<li><a href="#RunProcess">inst/src/RunProcess.R</a></li>
+<li><a href="#inst-src-runtest-r">inst/src/RunTest.R</a></li>
+<li><a href="#inst-bin-0-run-sh">inst/bin/0_run.sh</a></li>
+</ul></li>
+<li><a href="#contributing">Contributing</a>
+<ul>
+<li><a href="#quickstart">Quickstart</a></li>
+<li><a href="#newautomatedanalysis">New Automated Analysis</a></li>
+<li><a href="#development-guidelines">Development guidelines</a></li>
+<li><a href="#code-style">Code style</a></li>
+</ul></li>
+<li><a href="#manual-actions">Manual actions</a>
+<ul>
+<li><a href="#sykdomspulsen">Sykdomspulsen</a>
+<ul>
+<li><a href="#sykdomspulsen-weekly-update">Sykdomspulsen Weekly update</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+</aside>
+
+
+
     <div class="article-content">
       
 

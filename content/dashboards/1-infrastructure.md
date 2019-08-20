@@ -3,6 +3,7 @@ title: 1. Infrastructure
 author: Richard White
 date: '2019-01-01'
 slug: infrastructure 
+toc: true
 categories:
 tags: 
 - test
