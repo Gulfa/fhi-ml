@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.57.2" />
+
+
+<title>Sykdomspulsen - FHI ML</title>
+<meta property="og:title" content="Sykdomspulsen - FHI ML">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <ul class="nav-links">
+    
+    <li><a href="/">About Me</a></li>
+    
+    <li><a href="/dashboards/">Dashboards</a></li>
+    
+    <li><a href="https://github.com/folkehelseinstituttet/">GitHub</a></li>
+    
+    <li><a href="/post/">Post</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+  <article class="article">
+    
+
+    <h1 class="article-title">Sykdomspulsen</h1>
+
+    
+
+    <div class="article-content">
+      
+
+
+<pre class="r"><code>library(sykdomspuls)
+#&gt; PACKAGE: sykdomspuls
+#&gt; Version 2019.08.19 at 11:53
+#&gt; Developed by Richard White, Gunnar Ro
+#&gt; Department of Infectious Disease Epidemiology and Modelling
+#&gt; Norwegian Institute of Public Health
+#&gt; https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/</code></pre>
+<p><code>sykdomspuls</code> requres a specific raw data format. We require one (or less) rows for each structural variable:</p>
+<pre class="r"><code>print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_STRUCTURAL))
+#&gt; character(0)</code></pre>
+<p>For each row, the variables saved in <code>sykdomspuls::CONFIG$SYNDROMES</code> and <code>sykdomspuls::VARS$REQ_DATA_RAW_OTHER</code> contain the number of consultations that occurred for that combination of structural variables.</p>
+<pre class="r"><code>print(as.character(sykdomspuls::CONFIG$SYNDROMES))
+#&gt; [1] &quot;c(\&quot;influensa\&quot;, \&quot;gastro\&quot;, \&quot;respiratoryinternal\&quot;, \&quot;respiratoryexternal\&quot;, \&quot;lungebetennelse\&quot;, \&quot;bronkitt\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                          
+#&gt; [2] &quot;c(\&quot;influensa\&quot;, \&quot;gastro\&quot;, \&quot;respiratoryinternal\&quot;, \&quot;respiratoryexternal\&quot;, \&quot;lungebetennelse\&quot;, \&quot;bronkitt\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                          
+#&gt; [3] &quot;c(\&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;consult\&quot;, \&quot;consult\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;)&quot;                                                                                                                                                                                                                                                                                                                                                          
+#&gt; [4] &quot;c(\&quot;Influensa\&quot;, \&quot;Mage-tarm diagnose\&quot;, \&quot;Øvre-luftvei diagnose\&quot;, \&quot;Øvre-luftvei diagnose\&quot;, \&quot;Lungebetennelse diagnose\&quot;, \&quot;Bronkitt diagnose\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;Skabb diagnose\&quot;, \&quot;emerg1 diagnose\&quot;, \&quot;emerg2 diagnose\&quot;, \&quot;emerg3 diagnose\&quot;, \&quot;emerg4 diagnose\&quot;, \&quot;emerg5 diagnose\&quot;)&quot;                                                                                                                                                                                                                  
+#&gt; [5] &quot;c(\&quot;Influensa\&quot;, \&quot;Mage-tarm\&quot;, \&quot;Luftvei\&quot;, \&quot;Luftvei\&quot;, \&quot;Lungebet\&quot;, \&quot;Bronkitt\&quot;, \&quot;ConsWithInf\&quot;, \&quot;ConsWOInf\&quot;, \&quot;Skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                                                                                 
+#&gt; [6] &quot;c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+#&gt; [7] &quot;c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+#&gt; [8] &quot;c(FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+#&gt; [9] &quot;list(\&quot;Legekontakt\&quot;, c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;))&quot;
+print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_OTHER))
+#&gt; character(0)</code></pre>
+<p>In total, we require the following variables:</p>
+<pre class="r"><code>print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_ALL))
+#&gt; character(0)</code></pre>
+<p>We can use the function <code>GenFakeDataRaw()</code> to generate a set of fake data for <code>municip5054</code>.</p>
+<pre class="r"><code>d &lt;- GenFakeDataRaw()
+print(d)
+#&gt;         age       date     Kontaktype  Praksis     municip influensa
+#&gt;      1: 0-4 2006-01-01 Telefonkontakt Fastlege municip1624         3
+#&gt;      2: 0-4 2006-01-02 Telefonkontakt Fastlege municip1624         7
+#&gt;      3: 0-4 2006-01-03 Telefonkontakt Fastlege municip1624         3
+#&gt;      4: 0-4 2006-01-04 Telefonkontakt Fastlege municip1624         4
+#&gt;      5: 0-4 2006-01-05 Telefonkontakt Fastlege municip1624         1
+#&gt;     ---                                                             
+#&gt; 227900: 65+ 2019-12-27    Legekontakt Legevakt municip5054         6
+#&gt; 227901: 65+ 2019-12-28    Legekontakt Legevakt municip5054         8
+#&gt; 227902: 65+ 2019-12-29    Legekontakt Legevakt municip5054         6
+#&gt; 227903: 65+ 2019-12-30    Legekontakt Legevakt municip5054         3
+#&gt; 227904: 65+ 2019-12-31    Legekontakt Legevakt municip5054         4
+#&gt;         gastro respiratoryinternal respiratoryexternal lungebetennelse
+#&gt;      1:      4                   6                   5               0
+#&gt;      2:      8                   4                   3               3
+#&gt;      3:      3                   5                   6               5
+#&gt;      4:      5                   3                   3               4
+#&gt;      5:      4                   4                   4               4
+#&gt;     ---                                                               
+#&gt; 227900:      3                   8                   3               9
+#&gt; 227901:      1                   7                   7               6
+#&gt; 227902:      5                   3                   8               9
+#&gt; 227903:      6                   8                   5               9
+#&gt; 227904:      5                   4                   7               7
+#&gt;         bronkitt skabb emerg1 emerg2 emerg3 emerg4 emerg5 consult
+#&gt;      1:        5     4     10      2      4      5      6     107
+#&gt;      2:        6    11      3      9      4      6      4     118
+#&gt;      3:        2     5      4      4      7      7      2      90
+#&gt;      4:        7     3      6      3      7      6      4     104
+#&gt;      5:       10     3      1      4      5      2      5     102
+#&gt;     ---                                                          
+#&gt; 227900:        5     5      9     11      3      4      6     124
+#&gt; 227901:        6     4      6      5      5      2      4     105
+#&gt; 227902:        6     3     12      6     13      7     12     128
+#&gt; 227903:        5     2      4      3      6      7      5     118
+#&gt; 227904:        5     5      3      3      5      3      2     103</code></pre>
+<p>And we can then use the function <code>ValidateDataRaw()</code> to ensure that our fake data is in the correct format:</p>
+<pre class="r"><code>print(ValidateDataRaw(d))
+#&gt; [1] TRUE</code></pre>
+
+    </div>
+  </article>
+
+    
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

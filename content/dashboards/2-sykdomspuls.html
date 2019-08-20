@@ -1,0 +1,80 @@
+---
+title: 2. Sykdomspulsen
+author: ~
+date: '2019-01-02'
+slug: sykdomspulsen
+categories: []
+tags: []
+class: article
+---
+
+
+
+<pre class="r"><code>library(sykdomspuls)</code></pre>
+<pre><code>## PACKAGE: sykdomspuls</code></pre>
+<pre><code>## Version 2019.08.19 at 11:53</code></pre>
+<pre><code>## Developed by Richard White, Gunnar Ro</code></pre>
+<pre><code>## Department of Infectious Disease Epidemiology and Modelling</code></pre>
+<pre><code>## Norwegian Institute of Public Health</code></pre>
+<pre><code>## https://folkehelseinstituttet.github.io/dashboards_sykdomspuls/</code></pre>
+<p><code>sykdomspuls</code> requres a specific raw data format. We require one (or less) rows for each structural variable:</p>
+<pre class="r"><code>print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_STRUCTURAL))</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>For each row, the variables saved in <code>sykdomspuls::CONFIG$SYNDROMES</code> and <code>sykdomspuls::VARS$REQ_DATA_RAW_OTHER</code> contain the number of consultations that occurred for that combination of structural variables.</p>
+<pre class="r"><code>print(as.character(sykdomspuls::CONFIG$SYNDROMES))</code></pre>
+<pre><code>## [1] &quot;c(\&quot;influensa\&quot;, \&quot;gastro\&quot;, \&quot;respiratoryinternal\&quot;, \&quot;respiratoryexternal\&quot;, \&quot;lungebetennelse\&quot;, \&quot;bronkitt\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                          
+## [2] &quot;c(\&quot;influensa\&quot;, \&quot;gastro\&quot;, \&quot;respiratoryinternal\&quot;, \&quot;respiratoryexternal\&quot;, \&quot;lungebetennelse\&quot;, \&quot;bronkitt\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                          
+## [3] &quot;c(\&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;consult\&quot;, \&quot;consult\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;, \&quot;syndrome\&quot;)&quot;                                                                                                                                                                                                                                                                                                                                                          
+## [4] &quot;c(\&quot;Influensa\&quot;, \&quot;Mage-tarm diagnose\&quot;, \&quot;Øvre-luftvei diagnose\&quot;, \&quot;Øvre-luftvei diagnose\&quot;, \&quot;Lungebetennelse diagnose\&quot;, \&quot;Bronkitt diagnose\&quot;, \&quot;consult_with_influenza\&quot;, \&quot;consult_without_influenza\&quot;, \&quot;Skabb diagnose\&quot;, \&quot;emerg1 diagnose\&quot;, \&quot;emerg2 diagnose\&quot;, \&quot;emerg3 diagnose\&quot;, \&quot;emerg4 diagnose\&quot;, \&quot;emerg5 diagnose\&quot;)&quot;                                                                                                                                                                                                                  
+## [5] &quot;c(\&quot;Influensa\&quot;, \&quot;Mage-tarm\&quot;, \&quot;Luftvei\&quot;, \&quot;Luftvei\&quot;, \&quot;Lungebet\&quot;, \&quot;Bronkitt\&quot;, \&quot;ConsWithInf\&quot;, \&quot;ConsWOInf\&quot;, \&quot;Skabb\&quot;, \&quot;emerg1\&quot;, \&quot;emerg2\&quot;, \&quot;emerg3\&quot;, \&quot;emerg4\&quot;, \&quot;emerg5\&quot;)&quot;                                                                                                                                                                                                                                                                                                                                                                 
+## [6] &quot;c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+## [7] &quot;c(TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+## [8] &quot;c(FALSE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)&quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+## [9] &quot;list(\&quot;Legekontakt\&quot;, c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;), c(\&quot;Legekontakt\&quot;, \&quot;Telefonkontakt\&quot;))&quot;</code></pre>
+<pre class="r"><code>print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_OTHER))</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>In total, we require the following variables:</p>
+<pre class="r"><code>print(as.character(sykdomspuls::VARS$REQ_DATA_RAW_ALL))</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>We can use the function <code>GenFakeDataRaw()</code> to generate a set of fake data for <code>municip5054</code>.</p>
+<pre class="r"><code>d &lt;- GenFakeDataRaw()
+print(d)</code></pre>
+<pre><code>##         age       date     Kontaktype  Praksis     municip influensa
+##      1: 0-4 2006-01-01 Telefonkontakt Fastlege municip1624         3
+##      2: 0-4 2006-01-02 Telefonkontakt Fastlege municip1624         7
+##      3: 0-4 2006-01-03 Telefonkontakt Fastlege municip1624         5
+##      4: 0-4 2006-01-04 Telefonkontakt Fastlege municip1624         2
+##      5: 0-4 2006-01-05 Telefonkontakt Fastlege municip1624         5
+##     ---                                                             
+## 227900: 65+ 2019-12-27    Legekontakt Legevakt municip5054         6
+## 227901: 65+ 2019-12-28    Legekontakt Legevakt municip5054         7
+## 227902: 65+ 2019-12-29    Legekontakt Legevakt municip5054         7
+## 227903: 65+ 2019-12-30    Legekontakt Legevakt municip5054         9
+## 227904: 65+ 2019-12-31    Legekontakt Legevakt municip5054         3
+##         gastro respiratoryinternal respiratoryexternal lungebetennelse
+##      1:      7                   4                   4               6
+##      2:      8                   5                   2               9
+##      3:      8                   3                   7               6
+##      4:      4                   7                   4               2
+##      5:      8                   3                   5               7
+##     ---                                                               
+## 227900:      5                   4                   6               7
+## 227901:      5                   5                   4               2
+## 227902:      2                   2                   3               8
+## 227903:      8                   4                   5               3
+## 227904:      8                   7                   3               6
+##         bronkitt skabb emerg1 emerg2 emerg3 emerg4 emerg5 consult
+##      1:        7     5      3      2      7      5      5     105
+##      2:        4     3      7      3      7      0      2     113
+##      3:        4     4      1      6      8     10      3     119
+##      4:        6     7      7      6      4      3      4     110
+##      5:        8     7      4      3      5      1      4     109
+##     ---                                                          
+## 227900:        4     7      3      2      4      6      5     114
+## 227901:        6     4      5      5      2      6     10     114
+## 227902:        4     4      7      2      5      5     10     115
+## 227903:        4     5      3      7      9      4      2     121
+## 227904:        2     4      2      5      5      5      6     105</code></pre>
+<p>And we can then use the function <code>ValidateDataRaw()</code> to ensure that our fake data is in the correct format:</p>
+<pre class="r"><code>print(ValidateDataRaw(d))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
